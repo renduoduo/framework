@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ @(#)spring-config.xml com.maddyhome.idea.copyright.pattern.DateInfo@2454cf
+  ~ Copyright 2012© Emagsoftware Technology Co., Ltd. All Rights reserved.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context   http://www.springframework.org/schema/context/spring-context-3.2.xsd
+       http://www.springframework.org/schema/tx   http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd"
+        >
+
+    <context:component-scan base-package="cn.emagsoftware">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" order="1"/>
+    <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/ecms"/>
+    <context:property-placeholder location="classpath*:/application.properties"/>
+
+    <bean id="configuration" class="org.apache.commons.configuration.PropertiesConfiguration" init-method="load">
+        <property name="encoding" value="UTF-8"/>
+        <property name="fileName" value="application.properties"/>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg>
+            <ref bean="dataSource"/>
+        </constructor-arg>
+    </bean>
+    <bean name="memcachedClient" class="net.rubyeye.xmemcached.utils.XMemcachedClientFactoryBean"
+          destroy-method="shutdown">
+        <property name="servers">
+            <value>${memcached.servers}</value>
+        </property>
+        <property name="connectionPoolSize" value="${memcached.connectionPoolSize}"/>
+        <!-- SASL验证使用协议,must use binary protocol, default is TextCommandFactory -->
+        <property name="commandFactory">
+            <bean class="net.rubyeye.xmemcached.command.BinaryCommandFactory"/>
+        </property>
+        <!-- 客户端分布策略(一致性哈希算法),Distributed strategy -->
+        <property name="sessionLocator">
+            <bean class="net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator"/>
+        </property>
+        <property name="opTimeout" value="2000"/>
+        <property name="configuration">
+            <bean class="com.google.code.yanf4j.config.Configuration">
+                <property name="readThreadCount" value="5"/>
+                <property name="writeThreadCount" value="5"/>
+                <property name="checkSessionTimeoutInterval" value="5000"/>
+                <property name="soTimeout" value="5000"/>
+            </bean>
+        </property>
+    </bean>
+
+</beans>
