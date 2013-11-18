@@ -31,12 +31,12 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public List<Menu> getMenuList() {
-		return this.jdbcTemplate.query("select id, parent_Id as parentId, menu_name as menuName, url from tb_menu where parent_Id is null", new BeanPropertyRowMapper<Menu>(Menu.class));
+		return this.jdbcTemplate.query("select id, parent_Id as parentId, menu_name as menuName, url, is_leaf as leaf from tb_menu where parent_Id is null", new BeanPropertyRowMapper<Menu>(Menu.class));
 	}
 
 	@Override
 	public List<Menu> getMenuListById(Long id) {
-		return this.jdbcTemplate.query("select id, parent_Id as parentId, menu_name as menuName, url from tb_menu where parent_Id = ?",new Object[]{id},new int[]{Types.BIGINT}, new BeanPropertyRowMapper<Menu>(Menu.class));
+		return this.jdbcTemplate.query("select id, parent_Id as parentId, menu_name as menuName, url, is_leaf as leaf from tb_menu where parent_Id = ?",new Object[]{id},new int[]{Types.BIGINT}, new BeanPropertyRowMapper<Menu>(Menu.class));
 	}
 
 

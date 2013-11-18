@@ -9,27 +9,37 @@ package cn.emagsoftware.framework.pojo;
  */
 public class Menu {
 
-	private long id;
+	private Long id;
 
-	private long parentId;
+	private Long parentId;
 
 	private String menuName;
 
 	private String url;
 
-	public long getId() {
+	private String leaf;
+
+	public String getLeaf() {
+		return leaf;
+	}
+
+	public void setLeaf(String leaf) {
+		this.leaf = leaf;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getParentId() {
+	public Long getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(long parentId) {
+	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
 

@@ -14,41 +14,11 @@
     <script type="text/javascript" src="<%=basePath%>/easyui/locale/easyui-lang-zh_CN.js"></script>
 </head>
 <body class="easyui-layout">
+<input type="hidden" id="ctx" value="<%=basePath%>">
 <div data-options="region:'north',border:false" style="height:60px;background:#B3DFDA;padding:10px">north region</div>
 <div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:10px;">
-    <div style="margin:10px 0;">aa</div>
-    <ul id="tree" class="easyui-tree">
-        <li>
-            <span>My Documents</span>
-            <ul>
-                <li data-options="state:'closed'">
-                    <span>Photos</span>
-                    <ul>
-                        <li>
-                            <span>Friend</span>
-                        </li>
-                        <li>
-                            <span>Wife</span>
-                        </li>
-                        <li>
-                            <span>Company</span>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <span>Program Files</span>
-                    <ul>
-                        <li>Intel</li>
-                        <li>Java</li>
-                        <li>Microsoft Office</li>
-                        <li>Games</li>
-                    </ul>
-                </li>
-                <li>index.html</li>
-                <li>about.html</li>
-                <li>welcome.html</li>
-            </ul>
-        </li>
+    <div style="margin:10px 0;">根</div>
+         <ul id="tree" class="easyui-tree">
     </ul>
 </div>
 <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
@@ -62,21 +32,27 @@
 <script type="text/javascript">
     $(function(){
         $('#tree').tree({
-            onClick: function(node){
-                // add a new tab panel
+            checkbox: false,
+            url:'/framework/menu/tree?id=0',
+            onBeforeExpand: function (node, param) {
+                $('#tree').tree('options').url = '/framework/menu/tree?id=' + node.id;// change the url
+            },
+            onClick: function (node) {
+                var url = node.attributes.url;
                 $('#tabs').tabs('add',{
-                    title:'用户管理',
-                    href:'/framework/loveTalk/initList',
+                    title:node.text,
+                    href:url,
                     closable:true,
                     tools:[{
-                         iconCls:'icon-mini-refresh',
-                         handler:function(){
+                        iconCls:'icon-mini-refresh',
+                        handler:function(){
                             alert('refresh');
-                            }
-                     }]
-                 });
-             }
-         });
+                        }
+                    }]
+                });
+            }
+        });
+
     });
 </script>
 </body>
