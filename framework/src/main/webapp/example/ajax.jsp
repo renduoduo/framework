@@ -15,7 +15,7 @@
        url:'list',
        method:'get',
        idField:'cks',
-       frozenColumns:[[{field:'cks',checkbox:true}]]">
+       frozenColumns:[[{field:'cks',checkbox:true}]],toolbar:'#tb'">
     <thead>
     <tr>
         <th data-options="field:'userName',width:80">用户名</th>
@@ -25,6 +25,28 @@
     </tr>
     </thead>
 </table>
+<div id="tb" style="padding:5px;height:auto">
+    <div style="margin-bottom:5px">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="add()"></a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true"></a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true"></a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true"></a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
+    </div>
+    <div>
+        Date From: <input class="easyui-datebox" style="width:80px">
+        To: <input class="easyui-datebox" style="width:80px">
+        Language:
+        <select class="easyui-combobox" panelHeight="auto" style="width:100px">
+            <option value="java">Java</option>
+            <option value="c">C</option>
+            <option value="basic">Basic</option>
+            <option value="perl">Perl</option>
+            <option value="python">Python</option>
+        </select>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="aa()">查询</a>
+    </div>
+</div>
 <div id="w" class="easyui-window" title="Basic Window" data-options="iconCls:'icon-save',closed:'true'" style="width:400px;height:400px;padding:10px;">
         <div style="padding:10px 0 10px 60px">
             <form id="ff" method="post">
@@ -54,26 +76,17 @@
         </div>
 </div>
 <script type="text/javascript">
-    $(function(){
-        var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
-        pager.pagination({
-            buttons:[{
-                iconCls:'icon-search',
-                handler:function(){
-                    alert('search');
-                }
-            },{
-                iconCls:'icon-add',
-                handler:function(){
-                    $('#w').window('open');
-                }
-            },{
-                iconCls:'icon-edit',
-                handler:function(){
-                    alert('edit');
-                }
-            }]
+    function add(){
+        $('#w').window('open');
+    }
+    function aa(){
+        $('#dg').datagrid('load', {
+            name: 'easyui'
         });
+
+    }
+    $(function(){
+
     })
 
     function submitForm(){
