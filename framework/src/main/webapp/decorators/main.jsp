@@ -1,3 +1,4 @@
+<%@ taglib prefix="sitemesh-decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -55,27 +56,11 @@
 <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
 <div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">south region</div>
 <div data-options="region:'center'">
-    <div id="tabs" class="easyui-tabs" style="">
-        <div title="Tab1" style="">
-        </div>
-    </div>
+    <sitemesh-decorator:body/>
 </div>
 <script type="text/javascript">
     $('#tt').tree({
         onClick: function(node){
-            // add a new tab panel
-            alert();
-            $('#tabs').tabs('add',{
-                title:'New Tab',
-                href：'/framework/loveTalk/list',
-                closable:true,
-                tools:[{
-                    iconCls:'icon-mini-refresh',
-                    handler:function(){
-                        alert('refresh');
-                    }
-                }]
-            });
         }
     });
 </script>

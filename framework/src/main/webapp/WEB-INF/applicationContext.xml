@@ -62,19 +62,21 @@
             </bean>
         </property>
     </bean>
-    <!--MongoDB 配置-->
-    <mongo:db-factory id="mongoDbFactory" dbname="e-store" />
 
-    <mongo:mapping-converter id="mongoConverter" base-package="com.oreilly.springdata.mongodb">
-        <mongo:custom-converters base-package="com.oreilly.springdata.mongodb" />
-    </mongo:mapping-converter>
-
-    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-        <constructor-arg ref="mongoDbFactory" />
-        <constructor-arg ref="mongoConverter" />
-        <property name="writeConcern" value="SAFE" />
+    <bean id="exceptionResolver" class="cn.emagsoftware.framework.exception.CustomSimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Exception">pages/error/error</prop>
+                <prop key="java.lang.Throwable">pages/error/error</prop>
+            </props>
+        </property>
+        <!-- 设置日志输出级别，不定义则默认不输出警告等错误日志信息 -->
+        <property name="warnLogCategory" value="WARN"></property>
+        <!-- 默认错误页面，当找不到上面mappings中指定的异常对应视图时，使用本默认配置 -->
+        <property name="defaultErrorView" value="pages/error/error"></property>
+        <!-- 默认HTTP状态码 -->
+        <property name="defaultStatusCode" value="500"></property>
     </bean>
-
-    <mongo:repositories base-package="com.oreilly.springdata.mongodb" />
+    <!--MongoDB 配置-->
 
 </beans>

@@ -64,15 +64,15 @@
    
 	<error-page>
 		<exception-type>java.lang.Throwable</exception-type>
-		<location>/error/error.jsp</location>
+		<location>/pages/error/error.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/error/error.jsp</location>
+		<location>/pages/error/error.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>404</error-code>
-		<location>/error/404.jsp</location>
+		<location>/pages/error/404.jsp</location>
 	</error-page>
     <!-- 配置自定义标签，并添加common.jsp的使用 -->
     <jsp-config>
