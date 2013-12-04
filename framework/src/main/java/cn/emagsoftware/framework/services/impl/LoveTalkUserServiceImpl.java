@@ -28,7 +28,7 @@ public class LoveTalkUserServiceImpl implements LoveTalkUserService{
 
 	@Override
 	public List<LoveTalkUser> getUserList() {
-		return this.jdbcTemplate.query("select id, userName, sex, age, address from user", new BeanPropertyRowMapper<LoveTalkUser>(LoveTalkUser.class));
+		return this.jdbcTemplate.query("select ied, userName, sex, age, address from user", new BeanPropertyRowMapper<LoveTalkUser>(LoveTalkUser.class));
 	}
 
 	public void save(final LoveTalkUser user){
